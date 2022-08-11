@@ -51,6 +51,8 @@ class Restaurant(models.Model):
                                  null=True)
     guests = models.ManyToManyField(MyUser, through='Rating', related_name='rest')
     favorite = models.ManyToManyField(MyUser, through='Favorite', related_name='favorite')
+    instagram = models.URLField('Сcылка на Instagram', max_length=300, blank=True, null=True)
+    site = models.URLField('Ссылка на сайт', max_length=300, blank=True, null=True)
 
     def clean(self):
         self.name = self.name.capitalize()

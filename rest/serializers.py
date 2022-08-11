@@ -85,7 +85,7 @@ class RestaurantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Restaurant
         fields = ['id', 'logo', 'phone_number_1',
-                  'address', ]
+                  'address', 'instagram', ]
 
 
 class FavoritesSerializer(serializers.ModelSerializer):
@@ -107,7 +107,7 @@ class RestaurantDetailSerializer(serializers.ModelSerializer):
         model = Restaurant
         fields = ['id', 'name', 'description', 'image', 'phone_number_1', 'phone_number_2', 'phone_number_3',
                   'address', 'openning_times', 'menu_image', 'rate', '_average_rating', 'rating_count',
-                  ]
+                  'site']
 
 
 
