@@ -126,7 +126,7 @@ class Review(models.Model):
     """Отзывы"""
     user = models.ForeignKey(MyUser, on_delete=models.SET_NULL, null=True)
     text = models.TextField('Содержание отзыва')
-    restaurant = models.ForeignKey(Restaurant, related_name='reviews', on_delete=models.CASCADE)
+    restaurant = models.ForeignKey(Restaurant, related_name='review', on_delete=models.CASCADE)
 
     def clean(self):
         self.name = self.name.capitalize()

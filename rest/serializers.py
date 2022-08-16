@@ -111,12 +111,13 @@ class RestaurantDetailSerializer(serializers.ModelSerializer):
     rate = MyUserRatingSerializer(many=True)
     rating_count = serializers.IntegerField(read_only=True)
     _average_rating = serializers.DecimalField(read_only=True, max_digits=2, decimal_places=1)
+    review = ReviewSerializer(many=True)
 
     class Meta:
         model = Restaurant
         fields = ['id', 'name', 'description', 'image', 'phone_numbers',
                   'address', 'openning_times', 'menu_image', 'rate', '_average_rating', 'rating_count',
-                  'site']
+                  'site', 'review', ]
 
 
 
