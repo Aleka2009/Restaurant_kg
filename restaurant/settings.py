@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'silk',
     'drf_yasg',
+    'phonenumber_field',
     # 'social_django',
     # my apps
     'rest',

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.admin.options import TabularInline
-from rest.models import Category, Selection, Sale, Restaurant, Image, MenuImage, SaleImage, Rating
+from rest.models import Category, Selection, Sale, Restaurant, Image, MenuImage, SaleImage, Rating, Contact
 
 
 class SaleImageAdminInLine(TabularInline):
@@ -44,10 +44,14 @@ class SaleModelAdmin(admin.ModelAdmin):
 class RestaurantModelAdmin(admin.ModelAdmin):
     inlines = (RestaurantImageAdminInline, RestaurantMenuImageAdminInLine)
     readonly_fields = ['id']
-    list_display = ['name', 'phone_number_1', ]
+    list_display = ['name', 'phone_numbers', ]
 
 
 @admin.register(Rating)
 class MyUserRatingAdmin(admin.ModelAdmin):
     pass
 
+
+@admin.register(Contact)
+class ContactsAdmin(admin.ModelAdmin):
+    pass

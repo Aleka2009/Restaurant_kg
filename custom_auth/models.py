@@ -13,7 +13,7 @@ class MyUser(AbstractUser):
     phone_number = models.CharField(_("phone number"), max_length=15, blank=True)
 
     is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
 
     objects = CustomUserManager()
 

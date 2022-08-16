@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from rest.models import Category, Selection, Sale, Restaurant, Review, Image, MenuImage, SaleImage, Rating, Favorite
+from rest.models import Category, Selection, Sale, Restaurant, Review, Image, MenuImage, SaleImage, Rating, Favorite, \
+    Contact
 
 
 class SaleImageSerializer(serializers.ModelSerializer):
@@ -80,11 +81,19 @@ class SaleSerializer(serializers.ModelSerializer):
         fields = ['id', 'time_create', 'time_update', 'name', 'sale_image', 'text', 'rest_name', ]
 
 
+class ContactSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Contact
+        fields = '__all__'
+
+
 class RestaurantSerializer(serializers.ModelSerializer):
+    phone_numbers = ContactSerializer(many=True)
 
     class Meta:
         model = Restaurant
-        fields = ['id', 'logo', 'phone_number_1',
+        fields = ['id', 'logo', 'phone_numbers',
                   'address', 'instagram', ]
 
 
@@ -98,14 +107,14 @@ class FavoritesSerializer(serializers.ModelSerializer):
 class RestaurantDetailSerializer(serializers.ModelSerializer):
     image = ImageSerializer(many=True)
     menu_image = MenuImageSerializer(many=True)
-    # rate = serializers.IntegerField(read_only=True)
+    phone_numbers = ContactSerializer(many=True)
     rate = MyUserRatingSerializer(many=True)
     rating_count = serializers.IntegerField(read_only=True)
     _average_rating = serializers.DecimalField(read_only=True, max_digits=2, decimal_places=1)
 
     class Meta:
         model = Restaurant
-        fields = ['id', 'name', 'description', 'image', 'phone_number_1', 'phone_number_2', 'phone_number_3',
+        fields = ['id', 'name', 'description', 'image', 'phone_numbers',
                   'address', 'openning_times', 'menu_image', 'rate', '_average_rating', 'rating_count',
                   'site']
 

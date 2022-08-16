@@ -1,5 +1,5 @@
 from django.db import models
-
+from phonenumber_field.modelfields import PhoneNumberField
 from custom_auth.models import MyUser
 
 
@@ -39,13 +39,8 @@ class Restaurant(models.Model):
     logo = models.ImageField('Логотип')
     name = models.CharField('Название', max_length=255)
     description = models.TextField('Описание')
-    # image = models.ImageField('Изображения', upload_to='image_restaurant/')
-    phone_number_1 = models.CharField('Номер телефона', max_length=15)
-    phone_number_2 = models.CharField('Номер телефона', max_length=15, blank=True, null=True)
-    phone_number_3 = models.CharField('Номер телефона', max_length=15, blank=True, null=True)
     address = models.CharField('Местоположение', max_length=255)
     openning_times = models.CharField('Время работы', max_length=255)
-    # menu_image = models.ImageField('Меню', upload_to='menu_restaurant/')
     selection = models.ManyToManyField(Selection, verbose_name='Подборка', blank=True)
     category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.SET_NULL,
                                  null=True)
@@ -63,6 +58,19 @@ class Restaurant(models.Model):
     class Meta:
         verbose_name = 'Ресторан'
         verbose_name_plural = 'Рестораны'
+
+
+class Contact(models.Model):
+    """Контакты"""
+    phone_number = PhoneNumberField()
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='phone_numbers')
+
+    def __str__(self):
+        return self.phone_number
+
+    class Meta:
+        verbose_name = 'Контакты'
+        verbose_name_plural = 'Контакты'
 
 
 class Sale(models.Model):
