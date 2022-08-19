@@ -69,7 +69,7 @@ class Contact(models.Model):
                                    related_name='phone_numbers', verbose_name='Заведение')
 
     def __str__(self):
-        return self.phone_number
+        return f'{self.phone_number}'
 
     class Meta:
         verbose_name = 'Контакты'
