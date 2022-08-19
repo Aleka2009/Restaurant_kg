@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include, re_path
-
+from django.conf.urls.i18n import i18n_patterns
 from restaurant import settings
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
@@ -37,10 +37,11 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls), # admin site
     path('auth/', include('custom_auth.urls')),
     path('rest/', include('rest.urls')),
     path('silk/', include('silk.urls', namespace='silk')),
+    path('i18n/', include('django.conf.urls.i18n')),
 
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0),
             name='schema-json'),
@@ -50,4 +51,13 @@ urlpatterns = [
     # path('social-auth/', include('social_django.urls', namespace="social")),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
+#
+# if 'rosetta' in settings.INSTALLED_APPS:
+#     urlpatterns += [
+#         re_path(r'^rosetta/', include('rosetta.urls'))
+#     ]
+urlpatterns += i18n_patterns(
+    path('auth/', include('custom_auth.urls')),
+    path('rest/', include('rest.urls')),
+    prefix_default_language=False
+)

@@ -1,5 +1,7 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+# from parler.models import TranslatableModel, TranslatedFields
+
 from custom_auth.models import MyUser
 
 
@@ -41,7 +43,7 @@ class Restaurant(models.Model):
     description = models.TextField('Описание')
     address = models.CharField('Местоположение', max_length=255)
     openning_times = models.CharField('Время работы', max_length=255)
-    selection = models.ManyToManyField(Selection, verbose_name='Подборка', blank=True)
+    selection = models.ManyToManyField(Selection, blank=True, verbose_name='Подборки')
     category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.SET_NULL,
                                  null=True)
     guests = models.ManyToManyField(MyUser, through='Rating', related_name='rest')
@@ -62,8 +64,9 @@ class Restaurant(models.Model):
 
 class Contact(models.Model):
     """Контакты"""
-    phone_number = PhoneNumberField()
-    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='phone_numbers')
+    phone_number = PhoneNumberField('Номер телефона')
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE,
+                                   related_name='phone_numbers', verbose_name='Заведение')
 
     def __str__(self):
         return self.phone_number
@@ -163,7 +166,8 @@ class Rating(models.Model):
 
 class Favorite(models.Model):
     """Избранное"""
-    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, verbose_name='пользователь', related_name='favorite_user')
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE,
+                             verbose_name='пользователь', related_name='favorite_user')
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, verbose_name='ресторан',
                                    related_name='restaurant_list')
 

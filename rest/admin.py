@@ -1,6 +1,13 @@
 from django.contrib import admin
+# from parler.admin import TranslatableAdmin
 from django.contrib.admin.options import TabularInline
+from modeltranslation.admin import TranslationAdmin
+
 from rest.models import Category, Selection, Sale, Restaurant, Image, MenuImage, SaleImage, Rating, Contact
+
+
+class ContactAdminInLine(TabularInline):
+    model = Contact
 
 
 class SaleImageAdminInLine(TabularInline):
@@ -22,29 +29,29 @@ class RestaurantImageAdminInline(TabularInline):
 
 
 @admin.register(Category)
-class CategoryModelAdmin(admin.ModelAdmin):
+class CategoryModelAdmin(TranslationAdmin):
     readonly_fields = ['id']
     list_display = ['name']
 
 
 @admin.register(Selection)
-class SelectionModelAdmin(admin.ModelAdmin):
+class SelectionModelAdmin(TranslationAdmin):
     readonly_fields = ['id']
     list_display = ['name']
 
 
 @admin.register(Sale)
-class SaleModelAdmin(admin.ModelAdmin):
+class SaleModelAdmin(TranslationAdmin):
     inlines = (SaleImageAdminInLine, )
     readonly_fields = ['id']
     list_display = ['name', 'time_create', 'time_update', ]
 
 
 @admin.register(Restaurant)
-class RestaurantModelAdmin(admin.ModelAdmin):
-    inlines = (RestaurantImageAdminInline, RestaurantMenuImageAdminInLine)
+class RestaurantModelAdmin(TranslationAdmin):
+    inlines = (RestaurantImageAdminInline, RestaurantMenuImageAdminInLine, ContactAdminInLine)
     readonly_fields = ['id']
-    list_display = ['name', 'phone_numbers', ]
+    list_display = ['name', 'description', ]
 
 
 @admin.register(Rating)
