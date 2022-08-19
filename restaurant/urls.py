@@ -40,6 +40,7 @@ urlpatterns = [
     path('admin/', admin.site.urls), # admin site
     path('auth/', include('custom_auth.urls')),
     path('rest/', include('rest.urls')),
+    path('about_us/', include('about_us.urls')),
     path('silk/', include('silk.urls', namespace='silk')),
     path('i18n/', include('django.conf.urls.i18n')),
 
@@ -59,5 +60,6 @@ urlpatterns = [
 urlpatterns += i18n_patterns(
     path('auth/', include('custom_auth.urls')),
     path('rest/', include('rest.urls')),
+    path('about_us/', include('about_us.urls')),
     prefix_default_language=False
 )

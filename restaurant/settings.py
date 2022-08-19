@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     # my apps
     'rest',
     'custom_auth',
+    'about_us',
 ]
 
 MIDDLEWARE = [

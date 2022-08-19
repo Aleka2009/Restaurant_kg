@@ -1,5 +1,4 @@
 from django.contrib import admin
-# from parler.admin import TranslatableAdmin
 from django.contrib.admin.options import TabularInline
 from modeltranslation.admin import TranslationAdmin
 
