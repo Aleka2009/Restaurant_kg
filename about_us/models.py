@@ -26,9 +26,6 @@ class Contacts(models.Model):
         verbose_name = 'Контакты'
         verbose_name_plural = 'Контакты'
 
-    def clean(self):
-        self.name = self.name.capitalize()
-
     def __str__(self):
         return f'{self.phone_number}'
 
