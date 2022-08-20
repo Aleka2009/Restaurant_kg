@@ -10,8 +10,8 @@ class Category(models.Model):
     name = models.CharField('Название', max_length=255)
 
     class Meta:
-        verbose_name = 'Заведение'
-        verbose_name_plural = 'Заведения'
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
 
     def clean(self):
         self.name = self.name.capitalize()
