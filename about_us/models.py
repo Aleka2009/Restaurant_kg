@@ -30,4 +30,5 @@ class Contacts(models.Model):
         self.name = self.name.capitalize()
 
     def __str__(self):
-        return self.phone_number
+        return f'{self.phone_number}'
+
