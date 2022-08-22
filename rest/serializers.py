@@ -61,7 +61,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ['id', 'name', 'rest_count', ]
+        fields = '__all__'
 
 
 class SelectionSerializer(serializers.ModelSerializer):
@@ -69,7 +69,7 @@ class SelectionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Selection
-        fields = ['id', 'name', 'image', 'restaurants_count', ]
+        fields = '__all__'
 
 
 class SaleSerializer(serializers.ModelSerializer):
@@ -78,7 +78,7 @@ class SaleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Sale
-        fields = ['id', 'time_create', 'time_update', 'name', 'sale_image', 'text', 'rest_name', ]
+        fields = '__all__'
 
 
 class ContactSerializer(serializers.ModelSerializer):
@@ -93,8 +93,7 @@ class RestaurantSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Restaurant
-        fields = ['id', 'logo', 'phone_numbers',
-                  'address', 'instagram', ]
+        fields = ['id', 'logo', 'phone_numbers', 'address', 'address_ru', 'address_en', 'address_ky', 'instagram', ]
 
 
 class FavoritesSerializer(serializers.ModelSerializer):
@@ -115,9 +114,5 @@ class RestaurantDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Restaurant
-        fields = ['id', 'name', 'description', 'image', 'phone_numbers',
-                  'address', 'openning_times', 'menu_image', 'rate', '_average_rating', 'rating_count',
-                  'site', 'review', ]
-
-
+        fields = '__all__'
 
