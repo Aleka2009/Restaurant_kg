@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'silk',
     'drf_yasg',
     'phonenumber_field',
+    "corsheaders",
     # 'social_django',
     # my apps
     'rest',
@@ -69,6 +70,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware', # new for translations
+    "corsheaders.middleware.CorsMiddleware", # django cors
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -149,6 +151,11 @@ LANGUAGES = (
     ('ky', gettext('Kyrgyz')),
 )
 
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'ru'
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
@@ -247,3 +254,29 @@ JAZZMIN_SETTINGS = {
 import django_on_heroku
 django_on_heroku.settings(locals())
 
+# CORS
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]

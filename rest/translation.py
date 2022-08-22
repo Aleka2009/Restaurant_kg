@@ -1,5 +1,5 @@
 from modeltranslation.translator import register, TranslationOptions
-from rest.models import Category, Selection, Restaurant, Sale
+from rest.models import Selection, Restaurant, Sale, Category
 
 
 @register(Category)

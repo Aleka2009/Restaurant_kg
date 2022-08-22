@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.admin.options import TabularInline
 from modeltranslation.admin import TranslationAdmin
 
-from rest.models import Category, Selection, Sale, Restaurant, Image, MenuImage, SaleImage, Rating, Contact
+from rest.models import Selection, Sale, Restaurant, Image, MenuImage, SaleImage, Rating, Contact, Category
 
 
 class ContactAdminInLine(TabularInline):

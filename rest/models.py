@@ -1,13 +1,12 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
-# from parler.models import TranslatableModel, TranslatedFields
 
 from custom_auth.models import MyUser
 
 
 class Category(models.Model):
     """Категории"""
-    name = models.CharField('Название', max_length=255)
+    name = models.CharField(verbose_name='Название', max_length=255)
 
     class Meta:
         verbose_name = 'Категория'
@@ -38,14 +37,14 @@ class Selection(models.Model):
 
 class Restaurant(models.Model):
     """Все заведения"""
-    logo = models.ImageField('Логотип')
+    logo = models.ImageField('Логотип', upload_to='logo/')
     name = models.CharField('Название', max_length=255)
     description = models.TextField('Описание')
     address = models.CharField('Местоположение', max_length=255)
     openning_times = models.CharField('Время работы', max_length=255)
     selection = models.ManyToManyField(Selection, blank=True, verbose_name='Подборки')
     category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.SET_NULL,
-                                 null=True)
+                                 null=True, blank=True)
     guests = models.ManyToManyField(MyUser, through='Rating', related_name='rest')
     favorite = models.ManyToManyField(MyUser, through='Favorite', related_name='favorite')
     instagram = models.URLField('Сcылка на Instagram', max_length=300, blank=True, null=True)
