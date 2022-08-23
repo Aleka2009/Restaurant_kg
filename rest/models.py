@@ -22,7 +22,7 @@ class Category(models.Model):
 class Selection(models.Model):
     """Подборки"""
     name = models.CharField('Название', max_length=255)
-    image = models.ImageField('Фото', upload_to="selections_image/")
+    image = models.ImageField('Фото', upload_to="selections_image/", blank=True, null=True)
 
     class Meta:
         verbose_name = 'Подборка'
@@ -37,7 +37,7 @@ class Selection(models.Model):
 
 class Restaurant(models.Model):
     """Все заведения"""
-    logo = models.ImageField('Логотип', upload_to='logo/')
+    logo = models.ImageField('Логотип', upload_to='logo/', blank=True, null=True)
     name = models.CharField('Название', max_length=255)
     description = models.TextField('Описание')
     address = models.CharField('Местоположение', max_length=255)
@@ -57,8 +57,8 @@ class Restaurant(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'Ресторан'
-        verbose_name_plural = 'Рестораны'
+        verbose_name = 'Заведение'
+        verbose_name_plural = 'Заведения'
 
 
 class Contact(models.Model):
@@ -95,7 +95,7 @@ class Sale(models.Model):
 
 
 class SaleImage(models.Model):
-    image = models.ImageField('Изображения', upload_to='sale_image/')
+    image = models.ImageField('Изображения', upload_to='sale_image/', blank=True, null=True)
     sale_image = models.ForeignKey(Sale, related_name='sale_image', verbose_name='Фото',
                                    on_delete=models.SET_NULL, null=True)
 
@@ -105,7 +105,7 @@ class SaleImage(models.Model):
 
 
 class Image(models.Model):
-    image = models.ImageField('Изображения', upload_to='image_rest/')
+    image = models.ImageField('Изображения', upload_to='image_rest/', blank=True, null=True)
     restaurant = models.ForeignKey(Restaurant, related_name='image', verbose_name='Фото',
                                    on_delete=models.SET_NULL, null=True)
 
@@ -115,7 +115,7 @@ class Image(models.Model):
 
 
 class MenuImage(models.Model):
-    image = models.ImageField('Изображения', upload_to='menu_image_rest/')
+    image = models.ImageField('Изображения', upload_to='menu_image_rest/', blank=True, null=True)
     restaurant = models.ForeignKey(Restaurant, related_name='menu_image', verbose_name='Фото',
                                    on_delete=models.SET_NULL, null=True)
 
