@@ -39,21 +39,19 @@ class MyUserRatingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Rating
-        fields = ['rate', 'restaurant', 'user']
+        fields = '__all__'
+        extra_kwargs = {
+            'user': {'read_only': True},
+            'restaurant': {'read_only': True}
+        }
 
-# class CreateRatingSerializer(serializers.ModelSerializer):
-#
-#     class Meta:
-#         model = Rating
-#         fields = ["user", "star", "restaurant"]
-
-    # def create(self, validated_data):
-    #     rating = Rating.objects.update_or_create(
-    #         user=validated_data.get('user', None),
-    #         restaurant=validated_data.get('restaurant', None),
-    #         defaults={'star': validated_data.get("star")}
-    #     )
-    #     return rating
+    def create(self, validated_data):
+        rate, _ = Rating.objects.update_or_create(
+            user=validated_data.get('user', None),
+            restaurant_id=validated_data.get('restaurant', None),
+            defaults={'rate': validated_data.get("rate")}
+        )
+        return rate
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -90,10 +88,12 @@ class ContactSerializer(serializers.ModelSerializer):
 
 class RestaurantSerializer(serializers.ModelSerializer):
     phone_numbers = ContactSerializer(many=True)
+    fav = serializers.BooleanField(default=False)
 
     class Meta:
         model = Restaurant
-        fields = ['id', 'logo', 'phone_numbers', 'address', 'address_ru', 'address_en', 'address_ky', 'instagram', ]
+        fields = ['id', 'logo', 'phone_numbers', 'address', 'address_ru', 'address_en',
+                  'address_ky', 'instagram', 'fav']
 
 
 class FavoritesSerializer(serializers.ModelSerializer):
@@ -111,6 +111,8 @@ class RestaurantDetailSerializer(serializers.ModelSerializer):
     rating_count = serializers.IntegerField(read_only=True)
     _average_rating = serializers.DecimalField(read_only=True, max_digits=2, decimal_places=1)
     review = ReviewSerializer(many=True)
+    fav = serializers.BooleanField(default=False)
+    selection = SelectionSerializer(many=True)
 
     class Meta:
         model = Restaurant

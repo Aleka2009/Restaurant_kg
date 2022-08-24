@@ -45,8 +45,9 @@ class Restaurant(models.Model):
     selection = models.ManyToManyField(Selection, blank=True, verbose_name='Подборки')
     category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.SET_NULL,
                                  null=True, blank=True)
-    guests = models.ManyToManyField(MyUser, through='Rating', related_name='rest')
+    # user = models.ManyToManyField(MyUser, through='Rating', related_name='rest')
     favorite = models.ManyToManyField(MyUser, through='Favorite', related_name='favorite')
+    # fav = models.BooleanField()
     instagram = models.URLField('Сcылка на Instagram', max_length=300, blank=True, null=True)
     site = models.URLField('Ссылка на сайт', max_length=300, blank=True, null=True)
 
@@ -151,7 +152,7 @@ class Rating(models.Model):
         (7, '7'), (8, '8'),
         (9, '9'), (10, '10'),
     )
-    user = models.OneToOneField(MyUser, on_delete=models.CASCADE, verbose_name='пользователь')
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, verbose_name='пользователь')
     rate = models.FloatField('Рейтинг', choices=RATE_CHOICES, null=True)
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, verbose_name='ресторан', related_name='rate')
 
@@ -161,6 +162,7 @@ class Rating(models.Model):
     class Meta:
         verbose_name = 'Рейтинг'
         verbose_name_plural = 'Рейтинги'
+        unique_together = (('user', 'restaurant'),)
 
 
 class Favorite(models.Model):
