@@ -249,7 +249,7 @@ JAZZMIN_SETTINGS = {
     "site_title": "Restaurant.kg",
     "site_header": "Restaurant.kg",
     "site_brand": "Restaurant.kg",
-    "show_ui_builder": True,
+    "show_ui_builder": False,
     "changeform_format": "horizontal_tabs",
 }
 

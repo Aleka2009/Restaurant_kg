@@ -103,12 +103,19 @@ class ContactSerializer(serializers.ModelSerializer):
 
 class RestaurantSerializer(serializers.ModelSerializer):
     phone_numbers = ContactSerializer(many=True)
-    # fav = serializers.BooleanField(default=False)
+    fav = serializers.BooleanField(default=False)
 
     class Meta:
         model = Restaurant
         fields = ['id', 'logo', 'phone_numbers', 'address', 'address_ru', 'address_en',
-                  'address_ky', 'instagram', ]
+                  'address_ky', 'instagram', 'fav']
+
+    def to_representation(self, instance):
+        response = super().to_representation(instance)
+        fav_list = Favorite.objects.filter(restaurant=instance.id).values_list('restaurant_id', flat=True).first()
+        if fav_list != None:
+            response['fav'] = True
+        return response
 
 
 class FavoritesSerializer(serializers.ModelSerializer):
@@ -116,6 +123,11 @@ class FavoritesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Favorite
         fields = ['user', 'restaurant']
+
+        extra_kwargs = {
+            'user': {'read_only': True},
+            'restaurant': {'read_only': True}
+        }
 
 
 class RestaurantDetailSerializer(serializers.ModelSerializer):
@@ -126,11 +138,17 @@ class RestaurantDetailSerializer(serializers.ModelSerializer):
     rating_count = serializers.IntegerField(read_only=True)
     _average_rating = serializers.DecimalField(read_only=True, max_digits=2, decimal_places=1)
     review = ReviewSerializer(many=True)
-    # fav = serializers.BooleanField(default=False)
-    # fav = FavoritesSerializer(many=False)
+    fav = serializers.BooleanField(default=False)
     selection = SelectionSerializer(many=True)
 
     class Meta:
         model = Restaurant
         fields = '__all__'
+
+    def to_representation(self, instance):
+        response = super().to_representation(instance)
+        fav_list = Favorite.objects.filter(restaurant=instance.id).values_list('restaurant_id', flat=True).first()
+        if fav_list != None:
+            response['fav'] = True
+        return response
 

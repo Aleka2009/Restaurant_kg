@@ -32,8 +32,6 @@ class RestaurantView(ModelViewSet):
         return self.serializer_classes.get(self.action, self.serializer_class)
 
     def get_queryset(self):
-        # fav = Restaurant.objects.get('restaurant')
-        # print(fav)
         return Restaurant.objects.all().annotate(rating_count=Count('rate__rate'),
                                                  _average_rating=Avg('rate__rate'))
 

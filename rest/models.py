@@ -45,10 +45,7 @@ class Restaurant(models.Model):
     selection = models.ManyToManyField(Selection, blank=True, verbose_name='Подборки')
     category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.SET_NULL,
                                  null=True, blank=True)
-    # user = models.ManyToManyField(MyUser, through='Rating', related_name='rest')
     favorite = models.ManyToManyField(MyUser, through='Favorite', related_name='favorite')
-    # fav = models.BooleanField()
-    # favorite = models.ManyToManyField(MyUser, default=None, blank=True, related_name='favorite_rest')
     instagram = models.URLField('Сcылка на Instagram', max_length=300, blank=True, null=True)
     site = models.URLField('Ссылка на сайт', max_length=300, blank=True, null=True)
 
@@ -172,23 +169,3 @@ class Favorite(models.Model):
                              verbose_name='пользователь', related_name='favorite_user')
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, verbose_name='ресторан',
                                    related_name='restaurant_list')
-
-
-
-# class FavoriteMarkBase(models.Model):
-#     class Meta:
-#         abstract = True
-#
-#     user = models.ForeignKey(MyUser, verbose_name='Пользователь')
-#
-#     def __str__(self):
-#         return f'{self.user.email}'
-#
-#
-# class FavoriteMark(FavoriteMarkBase):
-#     class Meta:
-#         db_table = "favorite_mark"
-#
-#     favorite = models.ForeignKey(Restaurant, verbose_name="Заведение")
-#
-#
