@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'phonenumber_field',
     "corsheaders",
+    'drf_multiple_model',
     # 'social_django',
     # my apps
     'rest',
@@ -180,6 +181,7 @@ REST_FRAMEWORK = {
     #     'rest_framework.authentication.TokenAuthentication',
     # ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 50,
 }
 
 # for custom our User
@@ -247,7 +249,40 @@ JAZZMIN_SETTINGS = {
     "site_title": "Restaurant.kg",
     "site_header": "Restaurant.kg",
     "site_brand": "Restaurant.kg",
+    "show_ui_builder": True,
+    "changeform_format": "horizontal_tabs",
+}
 
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": False,
+    "brand_small_text": False,
+    "brand_colour": "navbar-purple",
+    "accent": "accent-primary",
+    "navbar": "navbar-purple navbar-dark",
+    "no_navbar_border": False,
+    "navbar_fixed": True,
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar_fixed": False,
+    "sidebar": "sidebar-dark-purple",
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": False,
+    "sidebar_nav_compact_style": True,
+    "sidebar_nav_legacy_style": True,
+    "sidebar_nav_flat_style": False,
+    "theme": "cyborg",
+    "dark_mode_theme": None,
+    "button_classes": {
+        "primary": "btn-primary",
+        "secondary": "btn-secondary",
+        "info": "btn-outline-info",
+        "warning": "btn-outline-warning",
+        "danger": "btn-outline-danger",
+        "success": "btn-outline-success"
+    }
 }
 
 # for django_on_heroku

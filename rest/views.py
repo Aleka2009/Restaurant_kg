@@ -10,7 +10,8 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet, GenericViewSet, ViewSet
-
+from drf_multiple_model.viewsets import ObjectMultipleModelAPIViewSet
+from drf_multiple_model.pagination import MultipleModelLimitOffsetPagination
 from rest.models import Category, Review, Restaurant, Selection, Sale, Rating, Favorite
 from rest.permissions import IsAuthorPermission, RatingPermission, ReviewPermission
 from rest.serializers import RestaurantSerializer, RestaurantDetailSerializer, CategorySerializer, ReviewSerializer, \
@@ -31,9 +32,26 @@ class RestaurantView(ModelViewSet):
         return self.serializer_classes.get(self.action, self.serializer_class)
 
     def get_queryset(self):
+        # fav = Restaurant.objects.get('restaurant')
+        # print(fav)
         return Restaurant.objects.all().annotate(rating_count=Count('rate__rate'),
                                                  _average_rating=Avg('rate__rate'))
 
+
+class CategoryFullView(APIView):
+
+    def get(self, request, pk):
+        cat = Restaurant.objects.filter(category_id=pk).order_by('-id')
+        serializer = RestaurantSerializer(instance=cat, many=True)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+
+class CategoryDetailView(APIView):
+
+    def get(self, request, pk):
+        cat = Restaurant.objects.filter(category_id=pk).order_by('-id')[:4]
+        serializer = RestaurantSerializer(instance=cat, many=True)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
 class CategoryView(ModelViewSet):
@@ -119,7 +137,6 @@ class FavoritesView(APIView):
 
     def get(self, request, rest_pk):
         created = Favorite.objects.filter(restaurant_id=rest_pk, user=request.user).exists()
-        print(created)
         if created:
             Favorite.objects.filter(
                 restaurant_id=rest_pk,

@@ -62,6 +62,21 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class CategoryDetailSerializer(serializers.ModelSerializer):
+    rest_count = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = Category
+        fields = '__all__'
+
+
+class CategoryFullSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Category
+        fields = '__all__'
+
+
 class SelectionSerializer(serializers.ModelSerializer):
     restaurants_count = serializers.IntegerField(read_only=True)
 
@@ -88,12 +103,12 @@ class ContactSerializer(serializers.ModelSerializer):
 
 class RestaurantSerializer(serializers.ModelSerializer):
     phone_numbers = ContactSerializer(many=True)
-    fav = serializers.BooleanField(default=False)
+    # fav = serializers.BooleanField(default=False)
 
     class Meta:
         model = Restaurant
         fields = ['id', 'logo', 'phone_numbers', 'address', 'address_ru', 'address_en',
-                  'address_ky', 'instagram', 'fav']
+                  'address_ky', 'instagram', ]
 
 
 class FavoritesSerializer(serializers.ModelSerializer):
@@ -111,7 +126,8 @@ class RestaurantDetailSerializer(serializers.ModelSerializer):
     rating_count = serializers.IntegerField(read_only=True)
     _average_rating = serializers.DecimalField(read_only=True, max_digits=2, decimal_places=1)
     review = ReviewSerializer(many=True)
-    fav = serializers.BooleanField(default=False)
+    # fav = serializers.BooleanField(default=False)
+    # fav = FavoritesSerializer(many=False)
     selection = SelectionSerializer(many=True)
 
     class Meta:

@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest.views import ReviewView, RestaurantView, CategoryView, SelectionView, SaleView, MyUserRatingView, \
-    FavoritesView, FavView
+    FavoritesView, FavView, CategoryDetailView, CategoryFullView
 
 urlpatterns = [
     path('', RestaurantView.as_view({'get': 'list'})),
@@ -8,6 +8,8 @@ urlpatterns = [
         {'get': 'retrieve'}
     )),
     path('category/', CategoryView.as_view({'get': 'list'})),
+    path('category/<int:pk>/', CategoryDetailView.as_view()),
+    path('category_full/<int:pk>/', CategoryFullView.as_view()),
     path('selection/', SelectionView.as_view({'get': 'list'})),
     path('sale/', SaleView.as_view({'get': 'list'})),
     path('<int:re_pk>/rating/', MyUserRatingView.as_view({'post': 'create'})),
