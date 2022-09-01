@@ -41,7 +41,7 @@ urlpatterns = [
     path('auth/', include('custom_auth.urls')),
     path('', include('rest.urls')),
     path('about_us/', include('about_us.urls')),
-    path('silk/', include('silk.urls', namespace='silk')),
+    # path('silk/', include('silk.urls', namespace='silk')),
     path('i18n/', include('django.conf.urls.i18n')),
 
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0),
@@ -49,6 +49,7 @@ urlpatterns = [
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 
+    # path('social-auth/', include('social_django.urls', namespace="social")),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

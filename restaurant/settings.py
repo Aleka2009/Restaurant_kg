@@ -55,12 +55,18 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'rest_framework.authtoken',
-    'silk',
+    # 'silk',
     'drf_yasg',
     'phonenumber_field',
     "corsheaders",
     'drf_multiple_model',
+    # 'oauth2_provider',
     # 'social_django',
+    # 'rest_framework_social_oauth2',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.google',
     # my apps
     'rest',
     'custom_auth',
@@ -77,7 +83,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'silk.middleware.SilkyMiddleware',
+    # 'silk.middleware.SilkyMiddleware',
 
 ]
 
@@ -94,6 +100,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # 'social_django.context_processors.backends', # add this
+                # 'social_django.context_processors.login_redirect', # add this
             ],
         },
     },
@@ -177,9 +185,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
-    # 'DEFAULT_AUTHENTICATION_CLASSES': [
-    #     'rest_framework.authentication.TokenAuthentication',
-    # ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        # 'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+        # 'rest_framework_social_oauth2.authentication.SocialAuthentication',
+    ],
+
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 50,
 }
@@ -197,18 +208,31 @@ REST_AUTH_SERIALIZERS = {
 # SOCIAL_AUTH_POSTGRES_JSONFIELD = True
 #
 # # Components
-#
+# #
 # AUTHENTICATION_BACKENDS = [
+#     'social_core.backends.open_id.OpenIdAuth',
+#     'social_core.backends.vk.VKOAuth2',
+#     # 'social_core.backends.google.GoogleOpenId',
+#     # 'social_core.backends.google.GoogleOAuth2',
+#     'social_core.backends.google.GoogleOAuth',
+#     'social_core.backends.twitter.TwitterOAuth',
 #     'social_auth.backends.facebook.FacebookBackend',
-#     'social_auth.backends.contrib.vk.VKOAuth2Backend',
-#     'social_auth.backends.google.GoogleOAuth2Backend',
+#     'rest_framework_social_oauth2.backends.DjangoOAuth2',
 #     'django.contrib.auth.backends.ModelBackend',
+#     'allauth.account.auth_backends.AuthenticationBackend',
 # ]
+# # Authentication
+# # SOCIAL_AUTH_POSTGRES_JSONFIELD = True
+#
+# # Settings for VK
+# SOCIAL_AUTH_VK_OAUTH2_KEY = '51412239'
+# SOCIAL_AUTH_VK_OAUTH2_SECRET = '8JatLTcJkQ6NhiqRPDjB'
 #
 # # Settings for Facebook
 #
-# FACEBOOK_APP_ID = 'app_id'
-# FACEBOOK_API_SECRET = 'secret_token'
+# SOCIAL_AUTH_FACEBOOK_KEY = '555430332945993'
+# SOCIAL_AUTH_FACEBOOK_SECRET = '6b56b6b351397e95e7aa1c695322185c'
+# SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 #
 # # Settings for Вконтакте
 #
@@ -221,6 +245,19 @@ REST_AUTH_SERIALIZERS = {
 #
 # GOOGLE_OAUTH2_CLIENT_ID = '123456789.apps.googleusercontent.com'
 # GOOGLE_OAUTH2_CLIENT_SECRET = 'key_secert'
+#
+#
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         'SCOPE': [
+#             'profile',
+#             'email',
+#         ],
+#         'AUTH_PARAMS': {
+#             'access_type': 'online',
+#         }
+#     }
+# }
 #
 # # Settings  for Twitter
 #

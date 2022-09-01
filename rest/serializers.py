@@ -61,13 +61,24 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = '__all__'
 
+    def to_representation(self, instance):
+        response = super().to_representation(instance)
+        response = dict(response)
+        rest_list = Restaurant.objects.filter(category_id=instance.id).values().order_by('-id')[:4]
+        name = response.get('name',)
+        id = response.setdefault('id')
+        tuple_value = (id, name, rest_list)
+        tuple_key = ('id', 'name', 'restaurants')
+        dict_cat = dict(zip(tuple_key, tuple_value))
+        return dict_cat
 
-class CategoryDetailSerializer(serializers.ModelSerializer):
-    rest_count = serializers.IntegerField(read_only=True)
 
-    class Meta:
-        model = Category
-        fields = '__all__'
+# class CategoryDetailSerializer(serializers.ModelSerializer):
+#     rest_count = serializers.IntegerField(read_only=True)
+#
+#     class Meta:
+#         model = Category
+#         fields = '__all__'
 
 
 class CategoryFullSerializer(serializers.ModelSerializer):
@@ -103,18 +114,19 @@ class ContactSerializer(serializers.ModelSerializer):
 
 class RestaurantSerializer(serializers.ModelSerializer):
     phone_numbers = ContactSerializer(many=True)
-    fav = serializers.BooleanField(default=False)
+    liked = serializers.BooleanField(default=False)
+    # category_name = serializers.CharField(max_length=255, read_only=True)
 
     class Meta:
         model = Restaurant
         fields = ['id', 'logo', 'phone_numbers', 'address', 'address_ru', 'address_en',
-                  'address_ky', 'instagram', 'fav']
+                  'address_ky', 'instagram', 'liked', ]
 
     def to_representation(self, instance):
         response = super().to_representation(instance)
         fav_list = Favorite.objects.filter(restaurant=instance.id).values_list('restaurant_id', flat=True).first()
         if fav_list != None:
-            response['fav'] = True
+            response['liked'] = True
         return response
 
 
@@ -138,7 +150,7 @@ class RestaurantDetailSerializer(serializers.ModelSerializer):
     rating_count = serializers.IntegerField(read_only=True)
     _average_rating = serializers.DecimalField(read_only=True, max_digits=2, decimal_places=1)
     review = ReviewSerializer(many=True)
-    fav = serializers.BooleanField(default=False)
+    liked = serializers.BooleanField(default=False)
     selection = SelectionSerializer(many=True)
 
     class Meta:
@@ -149,6 +161,6 @@ class RestaurantDetailSerializer(serializers.ModelSerializer):
         response = super().to_representation(instance)
         fav_list = Favorite.objects.filter(restaurant=instance.id).values_list('restaurant_id', flat=True).first()
         if fav_list != None:
-            response['fav'] = True
+            response['liked'] = True
         return response
 

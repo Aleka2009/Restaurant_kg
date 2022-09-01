@@ -33,7 +33,9 @@ class RestaurantView(ModelViewSet):
 
     def get_queryset(self):
         return Restaurant.objects.all().annotate(rating_count=Count('rate__rate'),
-                                                 _average_rating=Avg('rate__rate'))
+                                                 _average_rating=Avg('rate__rate'),
+                                                 # category_name=F('category__name')
+                                                 )
 
 
 class CategoryFullView(APIView):
@@ -44,12 +46,12 @@ class CategoryFullView(APIView):
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
-class CategoryDetailView(APIView):
-
-    def get(self, request, pk):
-        cat = Restaurant.objects.filter(category_id=pk).order_by('-id')[:4]
-        serializer = RestaurantSerializer(instance=cat, many=True)
-        return Response(data=serializer.data, status=status.HTTP_200_OK)
+# class CategoryDetailView(APIView):
+#
+#     def get(self, request, pk):
+#         cat = Restaurant.objects.filter(category_id=pk).order_by('-id')[:4]
+#         serializer = RestaurantSerializer(instance=cat, many=True)
+#         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
 class CategoryView(ModelViewSet):
@@ -147,9 +149,18 @@ class FavoritesView(APIView):
             return Response({'success': 'liked'})
 
 
-class FavView(ModelViewSet):
+class LikedView(ModelViewSet):
     serializer_class = FavoritesSerializer
     permission_classes = (IsAuthorPermission, )
 
     def get_queryset(self):
         return Favorite.objects.filter(user=self.request.user.id)
+
+
+class CategoryViewSet(ModelViewSet):
+    queryset = Restaurant.objects.filter(category_id=1).order_by('-id')[:4]
+    serializer_class = RestaurantSerializer
+    # def retrieve(self, request, pk, *args, **kwargs):
+    #     cat = Restaurant.objects.filter(category_id=pk).order_by('-id')[:4]
+    #     serializer = RestaurantSerializer(instance=cat, many=True)
+    #     return Response(data=serializer.data, status=status.HTTP_200_OK)
