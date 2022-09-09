@@ -169,3 +169,10 @@ class Favorite(models.Model):
                              verbose_name='пользователь', related_name='favorite_user')
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, verbose_name='ресторан',
                                    related_name='restaurant_list')
+
+    def __str__(self):
+        return f'{self.user} {self.restaurant}'
+
+    class Meta:
+        verbose_name = 'Избранное'
+        verbose_name_plural = 'Избранные'
