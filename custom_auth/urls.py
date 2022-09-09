@@ -8,6 +8,6 @@ from rest_framework.authtoken.views import obtain_auth_token #АВТОМАТИЧ
 
 urlpatterns = [
     path('registration/', UserRegisterAPIViews.as_view(), name='user-registration'),
-    # path('logining/', obtain_auth_token, name='user-obtain_auth_token'), #АВТОМАТИЧЕСКИ
+    # path('logining/', MyAuthorization.as_view(), name='user-obtain_auth_token'), #АВТОМАТИЧЕСКИ
     path('login/', LoginView.as_view()), #Вручную
 ]

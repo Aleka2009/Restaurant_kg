@@ -48,7 +48,7 @@ urlpatterns = [
             name='schema-json'),
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-
+    path('accounts/', include('allauth.urls')),
     # path('social-auth/', include('social_django.urls', namespace="social")),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

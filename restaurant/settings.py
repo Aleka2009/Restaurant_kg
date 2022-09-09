@@ -55,23 +55,30 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'rest_framework.authtoken',
+     'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     # 'silk',
     'drf_yasg',
     'phonenumber_field',
     "corsheaders",
     'drf_multiple_model',
+
     # 'oauth2_provider',
     # 'social_django',
     # 'rest_framework_social_oauth2',
-    # 'allauth',
-    # 'allauth.account',
-    # 'allauth.socialaccount',
-    # 'allauth.socialaccount.providers.google',
+
+
     # my apps
     'rest',
     'custom_auth',
     'about_us',
 ]
+
+SITE_ID = 1
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -207,17 +214,17 @@ REST_AUTH_SERIALIZERS = {
 
 # SOCIAL_AUTH_POSTGRES_JSONFIELD = True
 #
-# # Components
-# #
+# Components
+#
 # AUTHENTICATION_BACKENDS = [
-#     'social_core.backends.open_id.OpenIdAuth',
-#     'social_core.backends.vk.VKOAuth2',
-#     # 'social_core.backends.google.GoogleOpenId',
-#     # 'social_core.backends.google.GoogleOAuth2',
-#     'social_core.backends.google.GoogleOAuth',
-#     'social_core.backends.twitter.TwitterOAuth',
-#     'social_auth.backends.facebook.FacebookBackend',
-#     'rest_framework_social_oauth2.backends.DjangoOAuth2',
+    # 'social_core.backends.open_id.OpenIdAuth',
+    # 'social_core.backends.vk.VKOAuth2',
+    # 'social_core.backends.google.GoogleOpenId',
+    # 'social_core.backends.google.GoogleOAuth2',
+    # 'social_core.backends.google.GoogleOAuth',
+    # 'social_core.backends.twitter.TwitterOAuth',
+    # 'social_auth.backends.facebook.FacebookBackend',
+    # 'rest_framework_social_oauth2.backends.DjangoOAuth2',
 #     'django.contrib.auth.backends.ModelBackend',
 #     'allauth.account.auth_backends.AuthenticationBackend',
 # ]

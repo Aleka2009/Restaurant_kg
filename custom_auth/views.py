@@ -7,6 +7,37 @@ from rest_framework.views import APIView
 from django.contrib.auth.hashers import check_password
 from custom_auth.models import MyUser
 from custom_auth.serializers import UserSerializer, LoginSerializer
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.schemas import ManualSchema
+from rest_framework.schemas import coreapi as coreapi_schema
+from rest_framework.compat import coreapi, coreschema
+
+
+# class MyAuthorization(ObtainAuthToken):
+#     if coreapi_schema.is_enabled():
+#         schema = ManualSchema(
+#             fields=[
+#                 coreapi.Field(
+#                     name="email",
+#                     required=True,
+#                     location='form',
+#                     schema=coreschema.String(
+#                         title="Email",
+#                         description="Valid username for authentication",
+#                     ),
+#                 ),
+#                 coreapi.Field(
+#                     name="password",
+#                     required=True,
+#                     location='form',
+#                     schema=coreschema.String(
+#                         title="Password",
+#                         description="Valid password for authentication",
+#                     ),
+#                 ),
+#             ],
+#             encoding="application/json",
+#         )
 
 
 class UserRegisterAPIViews(APIView):
@@ -31,6 +62,7 @@ class LoginView(APIView):
     @swagger_auto_schema(request_body=LoginSerializer)
     def post(self, request, *args, **kwargs):
         login = request.data.get('email')
+        print(request.data)
         if not MyUser.objects.filter(email=login).exists():
             return Response(
                 f'{login} - does not exists'

@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.admin.options import TabularInline
 from modeltranslation.admin import TranslationAdmin
 
-from rest.models import Selection, Sale, Restaurant, Image, MenuImage, SaleImage, Rating, Contact, Category
+from rest.models import Selection, Sale, Restaurant, Image, MenuImage, SaleImage, Rating, Contact, Category, Favorite
 
 
 class ContactAdminInLine(TabularInline):
@@ -61,3 +61,6 @@ class MyUserRatingAdmin(admin.ModelAdmin):
 @admin.register(Contact)
 class ContactsAdmin(admin.ModelAdmin):
     pass
+
+
+admin.site.register(Favorite)

@@ -1,7 +1,8 @@
+import requests
 from rest_framework import serializers
 from rest.models import Category, Selection, Sale, Restaurant, Review, Image, MenuImage, SaleImage, Rating, Favorite, \
     Contact
-
+from rest.permissions import IsAuthorPermission
 
 class SaleImageSerializer(serializers.ModelSerializer):
 
@@ -112,24 +113,6 @@ class ContactSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class RestaurantSerializer(serializers.ModelSerializer):
-    phone_numbers = ContactSerializer(many=True)
-    liked = serializers.BooleanField(default=False)
-    # category_name = serializers.CharField(max_length=255, read_only=True)
-
-    class Meta:
-        model = Restaurant
-        fields = ['id', 'logo', 'phone_numbers', 'address', 'address_ru', 'address_en',
-                  'address_ky', 'instagram', 'liked', ]
-
-    def to_representation(self, instance):
-        response = super().to_representation(instance)
-        fav_list = Favorite.objects.filter(restaurant=instance.id).values_list('restaurant_id', flat=True).first()
-        if fav_list != None:
-            response['liked'] = True
-        return response
-
-
 class FavoritesSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -140,6 +123,25 @@ class FavoritesSerializer(serializers.ModelSerializer):
             'user': {'read_only': True},
             'restaurant': {'read_only': True}
         }
+
+
+class RestaurantSerializer(serializers.ModelSerializer):
+    phone_numbers = ContactSerializer(many=True)
+    liked = serializers.BooleanField(default=False)
+
+    class Meta:
+        model = Restaurant
+        fields = ['id', 'logo', 'phone_numbers', 'address', 'address_ru', 'address_en',
+                  'address_ky', 'instagram', 'liked', 'favorite',]
+
+    def to_representation(self, instance):
+        response = super().to_representation(instance)
+        fav_list = Favorite.objects.filter(restaurant=instance.id).values_list('restaurant_id', flat=True).first()
+        people = response['favorite']
+        users = self.context['view'].request.user.id
+        if users in people:
+            response['liked'] = True
+        return response
 
 
 class RestaurantDetailSerializer(serializers.ModelSerializer):
@@ -159,8 +161,11 @@ class RestaurantDetailSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         response = super().to_representation(instance)
+        print(instance)
         fav_list = Favorite.objects.filter(restaurant=instance.id).values_list('restaurant_id', flat=True).first()
-        if fav_list != None:
+        people = response['favorite']
+        users = self.context['view'].request.user.id
+        if users in people:
             response['liked'] = True
         return response
 
