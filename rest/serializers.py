@@ -1,8 +1,7 @@
-import requests
 from rest_framework import serializers
 from rest.models import Category, Selection, Sale, Restaurant, Review, Image, MenuImage, SaleImage, Rating, Favorite, \
     Contact
-from rest.permissions import IsAuthorPermission
+
 
 class SaleImageSerializer(serializers.ModelSerializer):
 
