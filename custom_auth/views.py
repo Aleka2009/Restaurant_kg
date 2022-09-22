@@ -44,15 +44,11 @@ class UserRegisterAPIViews(APIView):
     @swagger_auto_schema(request_body=UserSerializer)
     def post(self, request):
         serializer = UserSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        token = Token.objects.create(user=user)
-        return Response({'token': str(token.key)})
-
-        # if serializer.is_valid():
-        #     serializer.save()
-        #     return response.Response(serializer.data, status=status.HTTP_201_CREATED)
-        # return response.Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        if serializer.is_valid():
+            user = serializer.save()
+            token = Token.objects.create(user=user)
+            return response.Response({'token': str(token.key)}, status=status.HTTP_201_CREATED)
+        return response.Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 """ПРОВЕРКА ЛОГИНА И ПАРОЛЯ. ВРУЧНУЮ"""

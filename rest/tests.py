@@ -45,7 +45,7 @@ class TestCreateUser(TestCase):
                               "password": "asd12asd234",
                               "confirm_password": "asd12asd234",
                             })
-        assert response.status_code == 200
+        assert response.status_code == 201
 
 
 
