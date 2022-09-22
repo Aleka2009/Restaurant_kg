@@ -51,8 +51,10 @@ python manage.py createsuperuser
 
 ANYTHING URLS YOU HAVE IN DIR "restaurant", FILE "urls.py"
 
-TESTS: DIR "core", FILE "tests.py"
+TESTS: DIR "rest", FILE "tests.py"
 
+FOR TESTING TESTS, YOU NEED TO SWITCH DATABASE "postgres" TO "sqlite3" BY COMMENTING 
+IN DIR "restaurant", FILE "settings.py"
 
 NEED TO ADD ENV VARS:
 

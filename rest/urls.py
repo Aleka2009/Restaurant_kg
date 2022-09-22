@@ -17,5 +17,6 @@ urlpatterns = [
     path('<int:rest_pk>/review/create/', ReviewView.as_view({'post': 'create'})),
     path('<int:rest_pk>/favorites/', FavoritesView.as_view()),
     path('favorites/', LikedView.as_view({'get': 'list'})),
-    path('cat/', CategoryViewSet.as_view({'get': 'list'}))
+    path('cat/', CategoryViewSet.as_view({'get': 'list'})),
+    path('for_test/', CategoryView.as_view({'get': 'list', 'post': 'create'})),
 ]
