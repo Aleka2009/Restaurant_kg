@@ -1,6 +1,6 @@
 PROJECT'S NAME: Restaurant_kg
 
-CLONING PROJECT:
+CLONING PROJECT
 
 for HTTPS:
 
@@ -32,9 +32,10 @@ TO START PROJECT:
 
 3)In another terminal:  docker-compose exec web python manage.py migrate --noinput
 
-4)go to your browser and write in the search bar: 127.0.0.1:8000
+4)go to your browser and write in the search bar: 127.0.0.1:8000 or localhost:8000
 
-IF YOU NEED TO GO IN DJANGO ADMIN PANEL: (127.0.0.1:8000/admin/)
+IF YOU NEED TO GO IN DJANGO ADMIN PANEL AND YOU NEED TO CREATE SUPERUSER(ADMIN): 
+(127.0.0.1:8000/admin/) or (localhost:8000)
 
 1.In terminal:
 
@@ -54,11 +55,19 @@ TESTS: DIR "core", FILE "tests.py"
 
 
 NEED TO ADD ENV VARS:
+
 SECRET_KEY
+
 DEBUG
+
 DATABASE_ENGINE
+
 DATABASE_NAME
+
 DATABASE_USER
+
 DATABASE_PASSWORD
+
 DATABASE_HOST
+
 DATABASE_PORT

@@ -136,7 +136,7 @@ class RestaurantSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         response = super().to_representation(instance)
-        fav_list = Favorite.objects.filter(restaurant=instance.id).values_list('restaurant_id', flat=True).first()
+        # fav_list = Favorite.objects.filter(restaurant=instance.id).values_list('restaurant_id', flat=True).first()
         people = response['favorite']
         users = self.context['view'].request.user.id
         if users in people:
@@ -162,7 +162,7 @@ class RestaurantDetailSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         response = super().to_representation(instance)
         print(instance)
-        fav_list = Favorite.objects.filter(restaurant=instance.id).values_list('restaurant_id', flat=True).first()
+        # fav_list = Favorite.objects.filter(restaurant=instance.id).values_list('restaurant_id', flat=True).first()
         people = response['favorite']
         users = self.context['view'].request.user.id
         if users in people:
