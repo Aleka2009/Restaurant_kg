@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.admin.options import TabularInline
 from modeltranslation.admin import TranslationAdmin
-
+from import_export.admin import ExportActionMixin
 from rest.models import Selection, Sale, Restaurant, Image, MenuImage, SaleImage, Rating, Contact, Category, Favorite
 
 
@@ -47,7 +47,7 @@ class SaleModelAdmin(TranslationAdmin):
 
 
 @admin.register(Restaurant)
-class RestaurantModelAdmin(TranslationAdmin):
+class RestaurantModelAdmin(ExportActionMixin, TranslationAdmin):
     inlines = (RestaurantImageAdminInline, RestaurantMenuImageAdminInLine, ContactAdminInLine)
     readonly_fields = ['id']
     list_display = ['name', 'description', ]
