@@ -21,7 +21,7 @@ from restaurant import settings
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-
+from report.views import ReportView
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -49,7 +49,8 @@ urlpatterns = [
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('accounts/', include('allauth.urls')),
-    # path('social-auth/', include('social_django.urls', namespace="social")),
+    path('report/report/', ReportView.as_view())\
+                  # path('social-auth/', include('social_django.urls', namespace="social")),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

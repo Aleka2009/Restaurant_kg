@@ -55,11 +55,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'rest_framework.authtoken',
-     'django.contrib.sites',
+    'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+
     # 'silk',
     'drf_yasg',
     'phonenumber_field',
@@ -69,16 +70,27 @@ INSTALLED_APPS = [
     # 'oauth2_provider',
     # 'social_django',
     # 'rest_framework_social_oauth2',
-
+    'django_celery_results',
 
     # my apps
     'rest',
     'custom_auth',
     'about_us',
+    'report',
 ]
 
 SITE_ID = 1
 
+# celery
+
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_CACHE_BACKEND = 'django-cache'
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'my_cache_table',
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -121,17 +133,17 @@ WSGI_APPLICATION = 'restaurant.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # },
-    'default': {'ENGINE': env('DATABASE_ENGINE'),
-                'NAME': env('DATABASE_NAME'),
-                'USER': env('DATABASE_USER'),
-                'PASSWORD': env('DATABASE_PASSWORD'),
-                'HOST': env('DATABASE_HOST'),
-                'PORT': env('DATABASE_PORT')
-                }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    },
+    # 'default': {'ENGINE': env('DATABASE_ENGINE'),
+    #             'NAME': env('DATABASE_NAME'),
+    #             'USER': env('DATABASE_USER'),
+    #             'PASSWORD': env('DATABASE_PASSWORD'),
+    #             'HOST': env('DATABASE_HOST'),
+    #             'PORT': env('DATABASE_PORT')
+    #             }
 }
 
 
@@ -199,11 +211,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
+    # 'DEFAULT_AUTHENTICATION_CLASSES': [
+    #     'rest_framework.authentication.TokenAuthentication',
     #     # 'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
     #     # 'rest_framework_social_oauth2.authentication.SocialAuthentication',
-    ],
+    # ],
 
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 50,
